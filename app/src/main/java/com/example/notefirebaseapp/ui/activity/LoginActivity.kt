@@ -72,12 +72,12 @@ class LoginActivity : AppCompatActivity() {
                     }
                 } catch (e: Exception) {
                     withContext(Main) {
-                        Toast.makeText(this@LoginActivity, e.message, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@LoginActivity, e.message, Toast.LENGTH_LONG).show()
                     }
                 }
             }
         } else {
-            Toast.makeText(this, "Enter email and password", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Enter email and password", Toast.LENGTH_LONG).show()
         }
     }
 
