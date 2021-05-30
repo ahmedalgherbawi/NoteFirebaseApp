@@ -16,8 +16,8 @@ import kotlinx.coroutines.withContext
 
 
 class LoginActivity : AppCompatActivity() {
-    lateinit var authRef: FirebaseAuth
-    var curentUserId = ""
+    private lateinit var authRef: FirebaseAuth
+    private var currentUserId = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -25,30 +25,28 @@ class LoginActivity : AppCompatActivity() {
         authRef = FirebaseAuth.getInstance()
         checkInitialState()
 
-
     }
-
 
     private fun checkInitialState() {
         if (authRef.currentUser == null) {
             login_btn_regester.setOnClickListener {
-                regesterNewUser()
+                registerNewUser()
             }
             login_btn_login.setOnClickListener {
                 loginUser()
             }
         } else {
-            authRef.currentUser?.uid?.also {
-                curentUserId = it
+            authRef.currentUser?.uid?.also { userId ->
+                currentUserId = userId
                 Intent(this, AllNotesActivity::class.java).also {
-                    it.putExtra("userId", curentUserId)
+                    it.putExtra("userId", currentUserId)
                     startActivity(it)
                 }
             }
         }
     }
 
-    private fun regesterNewUser() {
+    private fun registerNewUser() {
         val email = login_et_email.text.toString()
         val password = login_et_password.text.toString()
 
@@ -63,9 +61,9 @@ class LoginActivity : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         ).show()
                         authRef.currentUser?.uid?.also {
-                            curentUserId = it
+                            currentUserId = it
                             Intent(this@LoginActivity, AllNotesActivity::class.java).also {
-                                it.putExtra("userId", curentUserId)
+                                it.putExtra("userId", currentUserId)
                                 startActivity(it)
                             }
                         }
@@ -92,10 +90,10 @@ class LoginActivity : AppCompatActivity() {
                     withContext(Main) {
                         Toast.makeText(this@LoginActivity, "login successfully", Toast.LENGTH_SHORT)
                             .show()
-                        authRef.currentUser?.uid?.also {
-                            curentUserId = it
+                        authRef.currentUser?.uid?.also { userId ->
+                            currentUserId = userId
                             Intent(this@LoginActivity, AllNotesActivity::class.java).also {
-                                it.putExtra("userId", curentUserId)
+                                it.putExtra("userId", currentUserId)
                                 startActivity(it)
                             }
                         }

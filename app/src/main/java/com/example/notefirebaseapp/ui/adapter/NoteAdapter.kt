@@ -9,9 +9,13 @@ import com.example.notefirebaseapp.model.Note
 import kotlinx.android.synthetic.main.note_item_layout.view.*
 
 class NoteAdapter(
-    val notes: MutableList<Note>,
-    val lisener: OnNoteClickLisener
+    private val notes: MutableList<Note>,
+    private val listener: Listener
 ) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
+
+    interface Listener {
+        fun onUpdate(note: Note)
+    }
 
     inner class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -27,7 +31,7 @@ class NoteAdapter(
             item_tv_title.text = note.title
             item_tv_desc.text = note.desc
             setOnClickListener {
-                lisener.onUpdete(note)
+                listener.onUpdate(note)
             }
         }
     }
@@ -36,8 +40,4 @@ class NoteAdapter(
         return notes.size
     }
 
-}
-
-interface OnNoteClickLisener {
-    fun onUpdete(note:Note)
 }
